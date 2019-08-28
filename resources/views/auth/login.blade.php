@@ -5,7 +5,7 @@
     <b-row align-h="center">
         <b-col cols="8">
                 <b-card
-                title="Inicio de Sesion"
+                title="Inicio de Sesion" class="my-3"
               ><b-alert show>Por favor Ingrese sus Datos:</b-alert>
 
                 <b-form method="POST" action="{{ route('login') }}">
@@ -13,7 +13,6 @@
                         <b-form-group
                         label="Correo Electronico:"
                         label-for="email"
-                        description="Nunca compartiremos tu Correo"
                         >
                         <b-form-input
                         id="email"
@@ -33,7 +32,7 @@
                         id="password"
                         name="password"
                         type="password"
-                        value="{{ old('password') }}" required
+                        required
                         ></b-form-input>
 
                         </b-form-group>

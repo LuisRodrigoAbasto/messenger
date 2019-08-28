@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html class="h-100">
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -16,11 +16,12 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
-    <div id="app">
+<body class="h-100">
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+    </form>
+    <div id="app" class="h-100">
             <b-navbar toggleable="sm" type="dark" variant="primary">
                     <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
                 
@@ -35,18 +36,17 @@
                                     <b-nav-item href="{{ route('register') }}">Registrarse</b-nav-item>
                                     @else
                                     <!-- Navbar dropdowns -->
-                                    <b-nav-item-dropdown text="Username" right>
-                                      <b-dropdown-item href="#">Cerrar Sesion</b-dropdown-item>
+                                    <b-nav-item-dropdown text=" {{ Auth::user()->name }} " right>
+                                      <b-dropdown-item href="#" @click="logout">Cerrar Sesion</b-dropdown-item>
                                       <b-dropdown-item href="#">Settings</b-dropdown-item>
                                     </b-nav-item-dropdown>
                                     @endguest
                             </b-navbar-nav>
                     </b-collapse>
                   </b-navbar>
-      
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+                  
+                @yield('content')
+        </div>
+    
 </body>
 </html>

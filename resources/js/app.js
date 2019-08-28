@@ -12,9 +12,21 @@ import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('contacto', require('./components/Contacto.vue').default);
+Vue.component('contacto-lista', require('./components/ContactoLista.vue').default);
+Vue.component('contacto-activo', require('./components/ContactoActivo').default);
 
 
 const app = new Vue({
-    el: '#app',
+    el: '#app',  
+    data:{
+    mainProps: { blank: true, blankColor: '#777', width: 60, height: 60, class: 'm1' }
+    },
+    methods:{
+        logout()
+        {
+            document.getElementById('logout-form').submit();
+        }
+}
+
 });
