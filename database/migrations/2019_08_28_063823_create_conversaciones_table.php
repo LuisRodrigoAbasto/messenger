@@ -16,14 +16,14 @@ class CreateConversacionesTable extends Migration
         Schema::create('conversaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
             //user
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->unsignedInteger('contacto_id');
+            $table->unsignedBigInteger('contacto_id');
             $table->foreign('contacto_id')->references('id')->on('users');
 
             $table->text('last_message');
-            $table->dataTime('las_time');
+            $table->dateTime('las_time');
 
             $table->boolean('lista_notificaciones')->default(true);
             $table->boolean('blockeado')->default(false);

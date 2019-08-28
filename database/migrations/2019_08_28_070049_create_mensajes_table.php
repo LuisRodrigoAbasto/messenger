@@ -16,10 +16,10 @@ class CreateMensajesTable extends Migration
         Schema::create('mensajes', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedInteger('from_id');
+            $table->unsignedBigInteger('from_id');
             $table->foreign('from_id')->references('id')->on('users');
 
-            $table->unsignedInteger('to_id');
+            $table->unsignedBigInteger('to_id');
             $table->foreign('to_id')->references('id')->on('users');
 
             $table->text('content');
