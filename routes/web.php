@@ -20,4 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/api/conversaciones', 'ConversacioneController@index');
 Route::get('/api/mensajes', 'MensajeController@index');
+Route::post('/api/mensajes', 'MensajeController@store');
 

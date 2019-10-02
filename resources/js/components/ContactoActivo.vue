@@ -7,31 +7,21 @@
         title="Convesacion Acctiva"
         class="h-100"
       >
-        <b-media vertical-align="center" class="mb-2">
-          <b-img rounded="circle" slot="aside" blank blank-color="#ccc" width="48" alt="placeholder"></b-img>
-
-           <b-card >
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-            nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-          </b-card>
-        </b-media>
-
-        <b-media right-align vertical-align="center" class="mb-2">
-          <b-img rounded="circle" slot="aside" blank blank-color="#ccc" width="48" alt="placeholder"></b-img>
-
-
-          <b-card >
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
-            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-            nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-          </b-card>
-        </b-media>
+        <mensaje-conversacion
+          v-for="data in mensajes"
+          :key="data.id"
+          :escrito="data.escrito"
+        >{{ data.content }}</mensaje-conversacion>
         <div slot="footer">
-          <b-form class="mb-0">
+          <b-form class="mb-0" @submit.prevent="enviarMensaje" autocomplete="off">
             <b-input-group>
-              <b-form-input class="text-center" type="text" placeholder="Escribe un mensaje"></b-form-input>
-              <b-button variant="primary">Enviar</b-button>
+              <b-form-input
+                class="text-center"
+                type="text"
+                v-model="newMensaje"
+                placeholder="Escribe un mensaje"
+              ></b-form-input>
+              <b-button type="submit" variant="primary">Enviar</b-button>
             </b-input-group>
           </b-form>
         </div>
@@ -56,11 +46,34 @@ export default {
         width: 60,
         height: 60,
         class: "m1"
-      }
+      },
+      mensajes: [],
+      newMensaje: ""
     };
   },
   mounted() {
-    console.log("Component mounted.");
+    this.cargarMensaje();
+  },
+  methods: {
+    cargarMensaje() {
+      axios.get("api/mensajes").then(response => {
+        // console.log(response.data);
+        this.mensajes = response.data;
+      });
+    },
+    enviarMensaje() {
+      const params = {
+        to_id: 2,
+        content: this.newMensaje
+      };
+      axios.post("api/mensajes", params).then(response => {
+        // console.log(response.data);
+        if (response.data.success) {
+          this.newMensaje = "";
+          this.cargarMensaje();
+        }
+      });
+    }
   }
 };
 </script>

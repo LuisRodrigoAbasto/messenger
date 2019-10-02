@@ -15,7 +15,7 @@ Vue.use(BootstrapVue)
 Vue.component('contacto', require('./components/Contacto.vue').default);
 Vue.component('contacto-lista', require('./components/ContactoLista.vue').default);
 Vue.component('contacto-activo', require('./components/ContactoActivo').default);
-
+Vue.component('mensaje-conversacion', require('./components/MensajeConversacion').default);
 
 const app = new Vue({
     el: '#app',  
