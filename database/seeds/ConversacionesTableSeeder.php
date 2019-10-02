@@ -16,14 +16,21 @@ class ConversacionesTableSeeder extends Seeder
             'user_id'=>1,
             'contacto_id'=>2,    
             'last_message'=>null,
-            'las_time'=>null,
+            'last_time'=>null,
         ]);    
         
         Conversacione::create([
             'user_id'=>2,
             'contacto_id'=>1,    
             'last_message'=>null,
-            'las_time'=>null,
-        ]);    
+            'last_time'=>null,
+        ]); 
+
+        Conversacione::create([
+            'user_id'=>1,
+            'contacto_id'=>3,    
+            'last_message'=>null,
+            'last_time'=>null,
+        ]);  
     }
 }

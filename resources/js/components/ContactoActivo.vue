@@ -28,7 +28,7 @@
       </b-card>
     </b-col>
     <b-col cols="4">
-      <b-img v-bind="mainProps" rounded="circle" alt="Circle image"></b-img>
+      <b-img rounded="circle" blank blank-color="#777" alt="img" class="m-1"></b-img>
       <p>Usuario Seleccionado</p>
       <hr />
       <b-form-checkbox>Desactivar Notificaciones</b-form-checkbox>
@@ -38,15 +38,12 @@
 
 <script>
 export default {
+  props:
+  {
+    contacto_id:Number
+  },
   data() {
     return {
-      mainProps: {
-        blank: true,
-        blankColor: "#777",
-        width: 60,
-        height: 60,
-        class: "m1"
-      },
       mensajes: [],
       newMensaje: ""
     };
@@ -56,7 +53,7 @@ export default {
   },
   methods: {
     cargarMensaje() {
-      axios.get("api/mensajes").then(response => {
+      axios.get(`api/mensajes?contact_id=${this.contacto_id}`).then(response => {
         // console.log(response.data);
         this.mensajes = response.data;
       });
@@ -73,6 +70,14 @@ export default {
           this.cargarMensaje();
         }
       });
+    }
+  },
+  watch:
+  {
+    contacto_id(value)
+    {
+      console.log(`contacto_id=>${this.contacto_id}`);
+      this.cargarMensaje();
     }
   }
 };

@@ -23,7 +23,7 @@ class CreateConversacionesTable extends Migration
             $table->foreign('contacto_id')->references('id')->on('users');
 
             $table->text('last_message')->nullable();
-            $table->dateTime('las_time')->nullable();
+            $table->dateTime('last_time')->nullable();
 
             $table->boolean('lista_notificaciones')->default(true);
             $table->boolean('blockeado')->default(false);

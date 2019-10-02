@@ -23,5 +23,18 @@ class MensajesTableSeeder extends Seeder
             'content'=>'Bien Gracias. Y Tu?'
 
         ]);
+
+        Mensaje::create([
+            'from_id'=>1,
+            'to_id'=>3,
+            'content'=>'Hola, cuanto Tiempo?'
+
+        ]);
+        Mensaje::create([
+            'from_id'=>3,
+            'to_id'=>1,
+            'content'=>'que tal'
+
+        ]);
     }
 }

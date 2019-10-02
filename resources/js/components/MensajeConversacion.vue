@@ -19,7 +19,7 @@ export default {
     };
   },
   mounted() {
-    console.log("escrito :",this.escrito);
+    // console.log("escrito :",this.escrito);
   }
 };
 </script>
