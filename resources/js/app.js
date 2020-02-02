@@ -19,6 +19,7 @@ Vue.component('contacto-activo', require('./components/ContactoActivo').default)
 Vue.component('mensaje-conversacion', require('./components/MensajeConversacion').default);
 Vue.component('mensaje', require('./components/Mensaje.vue').default);
 Vue.component('status-component', require('./components/Status.vue').default);
+Vue.component('profile-component', require('./components/Profile.vue').default);
 
 const app = new Vue({
     el: '#app',  

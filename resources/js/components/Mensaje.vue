@@ -2,9 +2,12 @@
   <b-container fluid style="height: calc(100vh - 56px);">
     <b-row no-gutters>
       <b-col cols="4">
+        <b-form class="my-3 mx-2">
+          <b-form-input class="text-center" type="text" v-model="querySearch" placeholder="Buscar Contacto"></b-form-input>
+        </b-form>
         <contacto-lista
           @conversacionSelected="cargarActivoConversacion($event)"
-          :conversaciones="conversaciones"
+          :conversaciones="conversacionesFiltered"
         ></contacto-lista>
       </b-col>
       <b-col cols="8">
@@ -28,7 +31,8 @@ export default {
     return {
       selectedConversacion: null,
       mensajes: [],
-      conversaciones: []
+      conversaciones: [],
+      querySearch: ""
     };
   },
   mounted() {
@@ -42,10 +46,11 @@ export default {
     });
 
     Echo.join(`messenger`)
-      .here(users =>{ users.forEach(user => this.changeStatus(user,true));
+      .here(users => {
+        users.forEach(user => this.changeStatus(user, true));
       })
-      .joining(user => this.changeStatus(user,true))
-      .leaving(user => this.changeStatus(user,false));
+      .joining(user => this.changeStatus(user, true))
+      .leaving(user => this.changeStatus(user, false));
   },
   methods: {
     cargarActivoConversacion(conversacion) {
@@ -88,13 +93,22 @@ export default {
         this.conversaciones = response.data;
       });
     },
-    changeStatus(user,status){
-        const index = this.conversaciones.findIndex(conversacion => {
-          return conversacion.contacto_id == user.id;
-        });
-        if(index>=0){
-        this.$set( this.conversaciones[index],'online',status);
-        }
+    changeStatus(user, status) {
+      const index = this.conversaciones.findIndex(conversacion => {
+        return conversacion.contacto_id == user.id;
+      });
+      if (index >= 0) {
+        this.$set(this.conversaciones[index], "online", status);
+      }
+    }
+  },
+  computed: {
+    conversacionesFiltered() {
+      return this.conversaciones.filter(conversacion =>
+        conversacion.contacto_name.
+        toLowerCase().
+        includes(this.querySearch.toLowerCase())
+      );
     }
   }
 };
