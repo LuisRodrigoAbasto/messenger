@@ -29,7 +29,7 @@ class MensajeController extends Controller
     public function store(Request $request)
     {
         $mensaje=new Mensaje();
-        $mensaje->from_id= auth()->id();
+        $mensaje->from_id= \auth()->id();
         $mensaje->to_id= $request->to_id;
         $mensaje->content= $request->content;
         $saved=$mensaje->save();

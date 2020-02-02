@@ -40,45 +40,40 @@
 export default {
   props:
   {
-    contacto_id:Number
+    contacto_id:Number,
+    contacto_name:String,
+    mensajes:Array
   },
   data() {
     return {
-      mensajes: [],
       newMensaje: ""
     };
   },
   mounted() {
-    this.cargarMensaje();
+    // this.cargarMensaje();
   },
   methods: {
-    cargarMensaje() {
-      axios.get(`api/mensajes?contact_id=${this.contacto_id}`).then(response => {
-        // console.log(response.data);
-        this.mensajes = response.data;
-      });
-    },
+    
     enviarMensaje() {
       const params = {
-        to_id: 2,
+        to_id: this.contacto_id,
         content: this.newMensaje
       };
       axios.post("api/mensajes", params).then(response => {
         // console.log(response.data);
         if (response.data.success) {
           this.newMensaje = "";
-          this.cargarMensaje();
         }
       });
     }
   },
-  watch:
-  {
-    contacto_id(value)
-    {
-      console.log(`contacto_id=>${this.contacto_id}`);
-      this.cargarMensaje();
-    }
-  }
+  // watch:
+  // {
+  //   contacto_id(value)
+  //   {
+  //     console.log(`contacto_id=>${this.contacto_id}`);
+  //     this.cargarMensaje();
+  //   }
+  // }
 };
 </script>

@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     cargarConvesacion() {
-      axios.get("/api/conversaciones").then(response => {
+      axios.get("api/conversaciones").then(response => {
         this.conversaciones = response.data;
       });
     },
