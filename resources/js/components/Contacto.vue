@@ -13,7 +13,10 @@
         />
       </b-col>
       <b-col cols="6" align-self="center" class="d-none d-md-block">
-        <p class="mb-1">{{ conversacion.contacto_name }}</p>
+        <p class="mb-1">
+         <status-component :online="conversacion.online" />
+          {{ conversacion.contacto_name }}
+        </p>
         <p class="text-muted small mb-1">{{ conversacion.last_message }}</p>
       </b-col>
       <b-col cols="3" class="d-none d-md-block">
