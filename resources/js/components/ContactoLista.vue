@@ -4,40 +4,34 @@
       <b-form-input class="text-center" type="text" placeholder="Buscar Contacto"></b-form-input>
     </b-form>
     <b-list-group>
-        <contacto v-for="data in conversaciones" 
-        :key="data.id"
-        :data="data" 
-        @click.native="selectConversacion(data)" >
-        </contacto>
+      <contacto
+        v-for="conversacion in conversaciones"
+        :key="conversacion.id"
+        :conversacion="conversacion"
+        @click.native="selectConversacion(conversacion)"
+      ></contacto>
       <!-- <contacto variant="dark"></contacto>
 
       <contacto variant></contacto>
 
-      <contacto variant="secondary"></contacto> -->
+      <contacto variant="secondary"></contacto>-->
     </b-list-group>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    conversaciones: Array
+  },
   data() {
-    return {
-      conversaciones: []
-    };
+    return {};
   },
-  mounted() {
-    this.cargarConvesacion();
-  },
+  mounted() {},
   methods: {
-    cargarConvesacion() {
-      axios.get("api/conversaciones").then(response => {
-        this.conversaciones = response.data;
-      });
-    },
-    selectConversacion(data)
-    {
-// console.log(data);
-this.$emit('conversacionSelected',data)
+    selectConversacion(conversacion) {
+      // console.log(data);
+      this.$emit("conversacionSelected", conversacion);
     }
   }
 };

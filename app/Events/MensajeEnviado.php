@@ -27,6 +27,6 @@ class MensajeEnviado implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('example');
+        return new PrivateChannel('users.'.$this->mensaje->to_id);
     }
 }

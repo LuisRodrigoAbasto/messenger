@@ -11,7 +11,7 @@ class MensajeController extends Controller
     public function index(Request $request)
     {
         $user=auth()->id();
-        $contacto=$request->contact_id;
+        $contacto=$request->contacto_id;
         $data=Mensaje::select('id',
         DB::raw("if(`from_id`=$user,true,false) as escrito"),'created_at','content')
         ->where(function ($query) use($user,$contacto)
@@ -36,6 +36,7 @@ class MensajeController extends Controller
 
         $data=[];
         $data['success']=$saved;
+        $data['mensaje']=$mensaje;
         return $data;
 
     }
