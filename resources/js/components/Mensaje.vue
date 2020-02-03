@@ -5,10 +5,7 @@
         <b-form class="my-3 mx-2">
           <b-form-input class="text-center" type="text" v-model="querySearch" placeholder="Buscar Contacto"></b-form-input>
         </b-form>
-        <contacto-lista
-          @conversacionSelected="cargarActivoConversacion($event)"
-          :conversaciones="conversacionesFiltered"
-        ></contacto-lista>
+        <contacto-lista/>
       </b-col>
       <b-col cols="8">
         <contacto-activo
@@ -17,9 +14,7 @@
           :contacto_name="selectedConversacion.contacto_name"
           :contacto_image="selectedConversacion.contacto_image"
           :my-image="myImageUrl"
-          :mensajes="mensajes"
-          @messageCreated="addMessage($event)"
-        ></contacto-activo>
+          @messageCreated="addMessage($event)"/>
       </b-col>
     </b-row>
   </b-container>
@@ -28,14 +23,6 @@
 export default {
   props: {
     user: Object
-  },
-  data() {
-    return {
-      selectedConversacion: null,
-      mensajes: [],
-      conversaciones: [],
-      querySearch: ""
-    };
   },
   mounted() {
     this.cargarConvesacion();
@@ -55,21 +42,7 @@ export default {
       .leaving(user => this.changeStatus(user, false));
   },
   methods: {
-    cargarActivoConversacion(conversacion) {
-      // console.log('Selecionaste',conversacion);
-      this.selectedConversacion = conversacion;
-      this.cargarMensaje();
-    },
-    cargarMensaje() {
-      axios
-        .get(
-          `api/mensajes?contacto_id=${this.selectedConversacion.contacto_id}`
-        )
-        .then(response => {
-          // console.log(response.data);
-          this.mensajes = response.data;
-        });
-    },
+
     addMessage(mensaje) {
       const conversacion = this.conversaciones.find(conversacion => {
         return (
@@ -87,7 +60,7 @@ export default {
         this.selectedConversacion.contacto_id == mensaje.from_id ||
         this.selectedConversacion.contacto_id == mensaje.to_id
       ) {
-        this.mensajes.push(mensaje);
+        this.$store.commit('addMessage',mensaje);
       }
     },
     cargarConvesacion() {
@@ -105,15 +78,12 @@ export default {
     }
   },
   computed: {
-    conversacionesFiltered() {
-      return this.conversaciones.filter(conversacion =>
-        conversacion.contacto_name.
-        toLowerCase().
-        includes(this.querySearch.toLowerCase())
-      );
-    },
+
     myImageUrl(){
       return `/images/users/${this.user.image}`;
+    },
+    selectedConversacion(){
+      return this.$store.state.selectedConversacion;
     }
     }
 };

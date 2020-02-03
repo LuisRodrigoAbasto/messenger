@@ -47,7 +47,6 @@ export default {
   props: {
     contacto_id: Number,
     contacto_name: String,
-    mensajes: Array,
     contacto_image:String,
     myImage:String,
   },
@@ -57,7 +56,7 @@ export default {
     };
   },
   mounted() {
-    // this.cargarMensaje();
+
   },
   methods: {
     enviarMensaje() {
@@ -80,17 +79,13 @@ export default {
       el.scrollTop = el.scrollHeight;
     }
   },
-  // watch: {
-  //   mensajes() {
-  //     setTimeout(() => {
-  //       this.scrolltoBotton();
-  //       console.log("mensaje ha cambiado");
-  //     }, 100);
-  //   }
-  // }
+  computed:{
+    mensajes(){
+      return this.$store.state.mensajes;
+    }
+  },
   updated(){
         this.scrolltoBotton();
-        console.log("mensaje ha cambiado");
   }
 };
 </script>
