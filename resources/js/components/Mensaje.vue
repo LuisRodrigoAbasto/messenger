@@ -15,6 +15,8 @@
           v-if="selectedConversacion"
           :contacto_id="selectedConversacion.contacto_id"
           :contacto_name="selectedConversacion.contacto_name"
+          :contacto_image="selectedConversacion.contacto_image"
+          :my-image="myImageUrl"
           :mensajes="mensajes"
           @messageCreated="addMessage($event)"
         ></contacto-activo>
@@ -25,7 +27,7 @@
 <script>
 export default {
   props: {
-    user_id: Number
+    user: Object
   },
   data() {
     return {
@@ -38,7 +40,7 @@ export default {
   mounted() {
     this.cargarConvesacion();
 
-    Echo.private(`users.${this.user_id}`).listen("MensajeEnviado", data => {
+    Echo.private(`users.${this.user.id}`).listen("MensajeEnviado", data => {
       const mensaje = data.mensaje;
       mensaje.escrito = false;
       console.log(data);
@@ -76,7 +78,7 @@ export default {
         );
       });
       const author =
-        this.user_id === mensaje.from_id ? "Tú" : conversacion.contacto_name;
+        this.user.id === mensaje.from_id ? "Tú" : conversacion.contacto_name;
       conversacion.last_message = `${author}: ${mensaje.content}`;
 
       conversacion.last_time = mensaje.created_at;
@@ -109,7 +111,10 @@ export default {
         toLowerCase().
         includes(this.querySearch.toLowerCase())
       );
+    },
+    myImageUrl(){
+      return `/images/users/${this.user.image}`;
     }
-  }
+    }
 };
 </script>

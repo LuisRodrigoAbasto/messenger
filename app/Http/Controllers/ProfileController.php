@@ -11,16 +11,20 @@ class ProfileController extends Controller
     }
     public function update(Request $request){
         // dd($request->all());
-        $user=Auth::user();
+        $user=auth()->user();
         $user->name=$request->name;
         if($request->password){
             $user->password=\bcrypt($request->password);
         }
         $file=$request->image;
+        
         if($file){
-            
+            $path=\public_path('images/users');
+            $fileName=time().'.'.$file->getClientOriginalExtension();
+            $moved=$file->move($path,$fileName);
+            $user->image=$fileName;
         }
-        $user->image=$fileName;
+
         $user->save();
 
         return back();

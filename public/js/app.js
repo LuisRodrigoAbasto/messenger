@@ -1724,11 +1724,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    variant: String,
-    conversacion: Object
+    conversacion: Object,
+    selected: Boolean
   },
   data: function data() {
     return {};
@@ -1738,6 +1737,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     lasTime: function lasTime() {
       return moment(this.conversacion.last_time, 'YYYY-MM-DD hh:mm:ss').locale('es').fromNow();
+    },
+    variant: function variant() {
+      return this.selected ? 'info' : '';
     }
   }
 });
@@ -1795,11 +1797,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     contacto_id: Number,
     contacto_name: String,
-    mensajes: Array
+    mensajes: Array,
+    contacto_image: String,
+    myImage: String
   },
   data: function data() {
     return {
@@ -1870,21 +1876,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     conversaciones: Array
   },
   data: function data() {
-    return {};
+    return {
+      selectConversacionId: null
+    };
   },
   mounted: function mounted() {},
   methods: {
     selectConversacion: function selectConversacion(conversacion) {
       // console.log(data);
+      this.selectConversacionId = conversacion.id;
       this.$emit("conversacionSelected", conversacion);
     }
   }
@@ -1925,9 +1930,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    user_id: Number
+    user: Object
   },
   data: function data() {
     return {
@@ -1941,7 +1948,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.cargarConvesacion();
-    Echo["private"]("users.".concat(this.user_id)).listen("MensajeEnviado", function (data) {
+    Echo["private"]("users.".concat(this.user.id)).listen("MensajeEnviado", function (data) {
       var mensaje = data.mensaje;
       mensaje.escrito = false;
       console.log(data);
@@ -1976,7 +1983,7 @@ __webpack_require__.r(__webpack_exports__);
       var conversacion = this.conversaciones.find(function (conversacion) {
         return conversacion.contacto_id == mensaje.from_id || conversacion.contacto_id == mensaje.to_id;
       });
-      var author = this.user_id === mensaje.from_id ? "Tú" : conversacion.contacto_name;
+      var author = this.user.id === mensaje.from_id ? "Tú" : conversacion.contacto_name;
       conversacion.last_message = "".concat(author, ": ").concat(mensaje.content);
       conversacion.last_time = mensaje.created_at;
 
@@ -2008,6 +2015,9 @@ __webpack_require__.r(__webpack_exports__);
       return this.conversaciones.filter(function (conversacion) {
         return conversacion.contacto_name.toLowerCase().includes(_this4.querySearch.toLowerCase());
       });
+    },
+    myImageUrl: function myImageUrl() {
+      return "/images/users/".concat(this.user.image);
     }
   }
 });
@@ -2035,7 +2045,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    escrito: Boolean
+    escrito: Boolean,
+    image: String
   },
   data: function data() {
     return {
@@ -2093,6 +2104,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: Object,
@@ -2101,7 +2122,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
-  methods: {}
+  computed: {
+    image: function image() {
+      return "/images/users/".concat(this.user.image);
+    }
+  }
 });
 
 /***/ }),
@@ -62122,11 +62147,10 @@ var render = function() {
               _c("b-img", {
                 staticClass: "m-1",
                 attrs: {
+                  src: _vm.conversacion.contacto_image,
                   rounded: "circle",
-                  blank: "",
                   width: "60",
                   height: "60",
-                  "blank-color": "#777",
                   alt: "img"
                 }
               })
@@ -62214,7 +62238,7 @@ var render = function() {
               staticClass: "h-100",
               attrs: {
                 "no-body": "",
-                "footer-bg-variant": "ligth",
+                "footer-bg-variant": "light",
                 "footer-border-variant": "dark",
                 title: "Convesacion Acctiva"
               }
@@ -62226,8 +62250,22 @@ var render = function() {
                 _vm._l(_vm.mensajes, function(mensaje) {
                   return _c(
                     "mensaje-conversacion",
-                    { key: mensaje.id, attrs: { escrito: mensaje.escrito } },
-                    [_vm._v(_vm._s(mensaje.content))]
+                    {
+                      key: mensaje.id,
+                      attrs: {
+                        escrito: mensaje.escrito,
+                        image: mensaje.escrito
+                          ? _vm.myImage
+                          : _vm.contacto_image
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(mensaje.content) +
+                          "\n          "
+                      )
+                    ]
                   )
                 }),
                 1
@@ -62296,14 +62334,14 @@ var render = function() {
           _c("b-img", {
             staticClass: "m-1",
             attrs: {
+              src: _vm.contacto_image,
               rounded: "circle",
-              blank: "",
-              "blank-color": "#777",
-              alt: "img"
+              width: "60",
+              height: "60"
             }
           }),
           _vm._v(" "),
-          _c("p", [_vm._v("Usuario Seleccionado")]),
+          _c("p", [_vm._v(_vm._s(_vm.contacto_name))]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
@@ -62342,7 +62380,10 @@ var render = function() {
     _vm._l(_vm.conversaciones, function(conversacion) {
       return _c("contacto", {
         key: conversacion.id,
-        attrs: { conversacion: conversacion },
+        attrs: {
+          conversacion: conversacion,
+          selected: _vm.selectConversacionId === conversacion.id
+        },
         nativeOn: {
           click: function($event) {
             return _vm.selectConversacion(conversacion)
@@ -62427,6 +62468,8 @@ var render = function() {
                     attrs: {
                       contacto_id: _vm.selectedConversacion.contacto_id,
                       contacto_name: _vm.selectedConversacion.contacto_name,
+                      contacto_image: _vm.selectedConversacion.contacto_image,
+                      "my-image": _vm.myImageUrl,
                       mensajes: _vm.mensajes
                     },
                     on: {
@@ -62478,11 +62521,10 @@ var render = function() {
       _c("b-img", {
         attrs: {
           slot: "aside",
+          src: _vm.image,
           rounded: "circle",
-          blank: "",
-          "blank-color": "#ccc",
-          width: "48",
-          alt: "placeholder"
+          height: "48",
+          width: "48"
         },
         slot: "aside"
       }),
@@ -62610,7 +62652,7 @@ var render = function() {
                     attrs: {
                       type: "password",
                       name: "password",
-                      placeholder: "Ingrese nombre de Usuario"
+                      placeholder: "Ingrese Nueva Contraseña"
                     }
                   })
                 ],
@@ -62625,6 +62667,18 @@ var render = function() {
                   }
                 },
                 [
+                  _c("b-img", {
+                    staticClass: "m-1",
+                    attrs: {
+                      src: _vm.image,
+                      rounded: "circle",
+                      width: "60",
+                      height: "60",
+                      title: "Imagen Actual",
+                      alt: "Imagen de Perfil"
+                    }
+                  }),
+                  _vm._v(" "),
                   _c("b-form-file", {
                     attrs: {
                       placeholder: "Seleccionar una nueva Imagen",

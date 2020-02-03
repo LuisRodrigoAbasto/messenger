@@ -5,13 +5,9 @@
         v-for="conversacion in conversaciones"
         :key="conversacion.id"
         :conversacion="conversacion"
+        :selected="selectConversacionId===conversacion.id"
         @click.native="selectConversacion(conversacion)"
       ></contacto>
-      <!-- <contacto variant="dark"></contacto>
-
-      <contacto variant></contacto>
-
-      <contacto variant="secondary"></contacto>-->
     </b-list-group>
 </template>
 
@@ -21,12 +17,15 @@ export default {
     conversaciones: Array
   },
   data() {
-    return {};
+    return {
+      selectConversacionId:null
+    };
   },
   mounted() {},
   methods: {
     selectConversacion(conversacion) {
       // console.log(data);
+      this.selectConversacionId=conversacion.id
       this.$emit("conversacionSelected", conversacion);
     }
   }

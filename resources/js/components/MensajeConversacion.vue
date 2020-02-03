@@ -1,6 +1,6 @@
 <template>
         <b-media :right-align="escrito" vertical-align="center" class="mb-2">
-          <b-img rounded="circle" slot="aside" blank blank-color="#ccc" width="48" alt="placeholder"></b-img>
+          <b-img :src="image" rounded="circle" slot="aside" height="48" width="48"/>
 
            <b-card >
              <slot></slot>
@@ -11,7 +11,8 @@
 <script>
 export default {
   props:{
-    escrito:Boolean
+    escrito:Boolean,
+    image:String
   },
   data() {
     return {

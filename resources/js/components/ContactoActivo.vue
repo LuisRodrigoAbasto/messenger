@@ -3,7 +3,7 @@
     <b-col cols="8">
       <b-card
         no-body
-        footer-bg-variant="ligth"
+        footer-bg-variant="light"
         footer-border-variant="dark"
         title="Convesacion Acctiva"
         class="h-100"
@@ -13,7 +13,9 @@
             v-for="mensaje in mensajes"
             :key="mensaje.id"
             :escrito="mensaje.escrito"
-          >{{ mensaje.content }}</mensaje-conversacion>
+            :image="mensaje.escrito ? myImage : contacto_image">
+            {{ mensaje.content }}
+            </mensaje-conversacion>
         </b-card-body>
 
         <div slot="footer">
@@ -32,9 +34,9 @@
       </b-card>
     </b-col>
     <b-col cols="4">
-      <b-img rounded="circle" blank blank-color="#777" alt="img" class="m-1"></b-img>
-      <p>Usuario Seleccionado</p>
-      <hr />
+      <b-img :src="contacto_image" rounded="circle" width="60" height="60" class="m-1"/>
+      <p>{{ contacto_name }}</p>
+      <hr>
       <b-form-checkbox>Desactivar Notificaciones</b-form-checkbox>
     </b-col>
   </b-row>
@@ -45,7 +47,9 @@ export default {
   props: {
     contacto_id: Number,
     contacto_name: String,
-    mensajes: Array
+    mensajes: Array,
+    contacto_image:String,
+    myImage:String,
   },
   data() {
     return {

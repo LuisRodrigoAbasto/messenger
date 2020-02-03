@@ -3,11 +3,10 @@
     <b-row class="p-2" align-h="center">
       <b-col cols="12" md="3" class="text-center">
         <b-img
+          :src="conversacion.contacto_image"
           rounded="circle"
-          blank
           width="60"
           height="60"
-          blank-color="#777"
           alt="img"
           class="m-1"
         />
@@ -29,8 +28,8 @@
 <script>
 export default {
   props: {
-    variant: String,
-    conversacion: Object
+    conversacion: Object,
+    selected:Boolean
   },
   data() {
     return {};
@@ -41,6 +40,9 @@ export default {
   computed:{
     lasTime(){
       return moment(this.conversacion.last_time,'YYYY-MM-DD hh:mm:ss').locale('es').fromNow();
+    },
+    variant(){
+      return this.selected ? 'info' :'';
     }
   }
 };
