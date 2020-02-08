@@ -7,7 +7,6 @@
           rounded="circle"
           width="60"
           height="60"
-          alt="img"
           class="m-1"
         />
       </b-col>
@@ -30,12 +29,6 @@ export default {
   props: {
     conversacion: Object,
     selected:Boolean
-  },
-  data() {
-    return {};
-  },
-  mounted() {
-    // console.log('Component mounted.')
   },
   computed:{
     lasTime(){

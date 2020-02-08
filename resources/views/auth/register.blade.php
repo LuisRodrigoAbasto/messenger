@@ -9,7 +9,7 @@
                   ><b-alert show>Por favor Ingrese sus Datos:</b-alert>
     
                     <b-form  method="POST" action="{{ route('register') }}">
-                            @csrf
+                        {{ csrf_field() }}
 
                             <b-form-group
                             label="Nombre"
@@ -30,7 +30,7 @@
                             >
                             <b-form-input
                             id="email"
-                            email="email"
+                            name="email"
                             type="email"
                             value="{{ old('email') }}" required autofocus
                             placeholder="example@gmail.com"
@@ -47,20 +47,18 @@
                             name="password"
                             type="password"
                             required
-                            autocomplete="new-password"
                             ></b-form-input>
 
                             </b-form-group>
 
                             <b-form-group
                             label="Confirmar Contraseña"
-                            label-for="password-confirm"
+                            label-for="password_confirmation"
                             >
                             <b-form-input
-                            id="password-confirm"
+                            id="password_confirmation"
                             type="password"
                             name="password_confirmation"
-                            autocomplete="new-password"
                             required
                             >
                             </b-form-input>

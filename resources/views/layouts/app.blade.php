@@ -25,7 +25,7 @@
             <b-navbar toggleable="sm" type="dark" variant="primary">
                     <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
                 
-                    <b-navbar-brand href="{{ url('/') }}">
+                    <b-navbar-brand href="{{ route('chat') }}">
                         {{ config('app.name', 'Laravel') }}
                     </b-navbar-brand>
                 

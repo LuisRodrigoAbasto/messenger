@@ -5,22 +5,12 @@
           height="10"
           :title="online ?'Conectado':'Desconectado'"
           :blank-color="online ? 'green':'gray'"
-          alt="img"
         />
 </template>
 <script>
 export default {
      props: {
     online: Boolean,
-  },
-  data() {
-    return {};
-  },
-  mounted() {
-    // console.log('Component mounted.')
-  },
-  computed:{
-   
   }
 }
 </script>

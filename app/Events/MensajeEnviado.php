@@ -27,6 +27,6 @@ class MensajeEnviado implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('users.'.$this->mensaje->to_id);
+        return new PrivateChannel('users.'.$this->mensaje->to_id);
     }
 }
